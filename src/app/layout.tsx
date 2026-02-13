@@ -41,7 +41,7 @@ export const metadata: Metadata = {
       "All in one 100% free PDF tools. Draw, edit, split, merge, rearrange, and convert, all in your browser, no files ever leave your device.",
     images: [
       {
-        url: "https://free-pdf-tools.vercel.app/og.png",
+        url: "https://free-pdf-tools.vercel.app/pdf-tools-og.png",
         width: 1200,
         height: 630,
         alt: "Free PDF tools",
@@ -68,8 +68,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Free PDF tools",
     description:
-      "Opensource PDF tools. All in one 100% free PDF tools. Draw, edit, split, merge, rearrange, and convert, all in your browser, no files ever leave your device.",
-    images: ["https://free-pdf-tools.vercel.app/og.png"],
+      "All in one 100% free PDF tools. Draw, edit, split, merge, rearrange, and convert, all in your browser, no files ever leave your device.",
+    images: ["https://free-pdf-tools.vercel.app/pdf-tools-og.png"],
   },
   viewport: {
     width: "device-width",
