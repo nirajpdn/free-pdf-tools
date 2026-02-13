@@ -22,7 +22,8 @@ import {
 import JSZip from "jszip";
 import { PDFDocumentProxy } from "pdfjs-dist";
 import { toast } from "sonner";
-import { Download, Loader2 } from "lucide-react";
+import { Download, FileEdit, Loader2 } from "lucide-react";
+import PdfPageViewer from "../ui/pdf-viewer";
 
 type ImageFormat = "png" | "jpeg" | "webp";
 
@@ -171,6 +172,7 @@ const PdfToImageTool = () => {
               setPdfDoc(null);
             }}
           >
+            <FileEdit className="size-4" />
             Change File
           </Button>
         </div>
@@ -193,26 +195,12 @@ const PdfToImageTool = () => {
           ))}
         </div>
       )}
-      <Dialog open={isViewOpen} onOpenChange={setIsViewOpen}>
-        <DialogContent className="max-w-4xl">
-          <DialogHeader>
-            <DialogTitle>
-              Page {Array.from(selected)[0] + 1} Preview
-            </DialogTitle>
-          </DialogHeader>
-          {viewCanvas && (
-            <div className="flex justify-center">
-              <div className="max-h-[60vh] overflow-auto rounded-lg border">
-                <img
-                  src={viewCanvas.toDataURL()}
-                  alt="Page preview"
-                  className="w-full"
-                />
-              </div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
+      <PdfPageViewer
+        isOpen={isViewOpen}
+        setIsOpen={setIsViewOpen}
+        title={`Page ${Array.from(selected)[0] + 1} Preview`}
+        imageUrl={viewCanvas?.toDataURL() || ""}
+      />
     </div>
   );
 };

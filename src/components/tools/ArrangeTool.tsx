@@ -1,24 +1,40 @@
 import { useState, useCallback } from "react";
 import FileUploadZone from "@/components/ui/file-upload-zone";
 import { Button } from "@/components/ui/button";
-import { loadPdfDocument, getAllPageThumbnails } from "@/lib/pdf-utils";
+import {
+  loadPdfDocument,
+  getAllPageThumbnails,
+  renderPageToCanvas,
+} from "@/lib/pdf-utils";
 import { PDFDocument } from "pdf-lib";
-import { GripVertical, Trash2, Copy, Download } from "lucide-react";
+import {
+  GripVertical,
+  Trash2,
+  Copy,
+  Download,
+  Eye,
+  FileEdit,
+} from "lucide-react";
 import { toast } from "sonner";
 import CustomTooltip from "../ui/custom-tooltip";
+import PdfPageViewer from "../ui/pdf-viewer";
+import { PDFDocumentProxy } from "pdfjs-dist";
 
 const ArrangeTool = () => {
   const [file, setFile] = useState<File | null>(null);
   const [thumbnails, setThumbnails] = useState<string[]>([]);
   const [pageOrder, setPageOrder] = useState<number[]>([]);
+  const [pdfDoc, setPdfDoc] = useState<PDFDocumentProxy | null>(null);
   const [loading, setLoading] = useState(false);
   const [dragIdx, setDragIdx] = useState<number | null>(null);
-
+  const [isViewOpen, setIsViewOpen] = useState(false);
+  const [viewCanvas, setViewCanvas] = useState<HTMLCanvasElement | null>(null);
   const handleFile = useCallback(async (files: File[]) => {
     setLoading(true);
     const f = files[0];
     setFile(f);
     const pdf = await loadPdfDocument(f);
+    setPdfDoc(pdf);
     const thumbs = await getAllPageThumbnails(pdf);
     setThumbnails(thumbs);
     setPageOrder(thumbs.map((_, i) => i));
@@ -45,6 +61,14 @@ const ArrangeTool = () => {
     const newOrder = [...pageOrder];
     newOrder.splice(idx + 1, 0, pageOrder[idx]);
     setPageOrder(newOrder);
+  };
+
+  const viewPage = async (idx: number) => {
+    if (!pdfDoc) return;
+    const pageNum = pageOrder[idx] + 1;
+    const canvas = await renderPageToCanvas(pdfDoc, pageNum, 2);
+    setViewCanvas(canvas);
+    setIsViewOpen(true);
   };
 
   const downloadPdf = async () => {
@@ -96,6 +120,7 @@ const ArrangeTool = () => {
               setThumbnails([]);
             }}
           >
+            <FileEdit className="size-4" />
             Change File
           </Button>
         </div>
@@ -126,7 +151,15 @@ const ArrangeTool = () => {
               />
               <div className="absolute bottom-0 inset-x-0 flex items-center justify-between bg-background/80 px-1.5 py-1">
                 <span className="text-[10px] font-medium">{origIdx + 1}</span>
-                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <CustomTooltip content="View Page">
+                    <button
+                      onClick={() => viewPage(origIdx)}
+                      className="text-muted-foreground hover:text-foreground cursor-pointer"
+                    >
+                      <Eye className="size-3" />
+                    </button>
+                  </CustomTooltip>
                   <CustomTooltip content="Duplicate">
                     <button
                       onClick={() => duplicatePage(i)}
@@ -149,6 +182,11 @@ const ArrangeTool = () => {
           ))}
         </div>
       )}
+      <PdfPageViewer
+        isOpen={isViewOpen}
+        setIsOpen={setIsViewOpen}
+        imageUrl={viewCanvas?.toDataURL() || ""}
+      />
     </div>
   );
 };

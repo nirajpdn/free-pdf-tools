@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { loadPdfDocument, getAllPageThumbnails } from "@/lib/pdf-utils";
 import { PDFDocument } from "pdf-lib";
 import { toast } from "sonner";
+import { FileEdit } from "lucide-react";
 
 const SplitTool = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -87,6 +88,7 @@ const SplitTool = () => {
               setThumbnails([]);
             }}
           >
+            <FileEdit className="size-4" />
             Change File
           </Button>
         </div>

@@ -33,6 +33,7 @@ export const metadata: Metadata = {
     "no files ever leave your device",
     "100% client-side",
     "no server",
+    "opensource",
   ],
   openGraph: {
     title: "Free PDF tools",
@@ -67,7 +68,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Free PDF tools",
     description:
-      "All in one 100% free PDF tools. Draw, edit, split, merge, rearrange, and convert, all in your browser, no files ever leave your device.",
+      "Opensource PDF tools. All in one 100% free PDF tools. Draw, edit, split, merge, rearrange, and convert, all in your browser, no files ever leave your device.",
     images: ["https://free-pdf-tools.vercel.app/og.png"],
   },
   viewport: {

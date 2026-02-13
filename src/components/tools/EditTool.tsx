@@ -6,7 +6,7 @@ import { loadPdfDocument, renderPageToCanvas } from "@/lib/pdf-utils";
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 import { PDFDocumentProxy } from "pdfjs-dist";
 import { toast } from "sonner";
-import { Download } from "lucide-react";
+import { Download, FileEdit } from "lucide-react";
 
 interface TextBlock {
   id: string;
@@ -208,6 +208,7 @@ const EditTool = () => {
             setPdfDoc(null);
           }}
         >
+          <FileEdit className="size-4" />
           Change File
         </Button>
       </div>

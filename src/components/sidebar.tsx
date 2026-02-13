@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import useTool from "@/hooks/useTool";
+import Image from "next/image";
 
 const Sidebar = () => {
   const { activeTool, setActiveTool, tools } = useTool();
@@ -15,6 +16,13 @@ const Sidebar = () => {
             <ChevronLeft className="h-4 w-4" />
           </Link>
         </Button>
+        <Image
+          src="/site-logo.png"
+          alt="PDF Tool"
+          height={28}
+          width={28}
+          className="h-7 w-auto"
+        />
         <span className="text-sm font-semibold text-foreground">PDF Tools</span>
       </div>
       <nav className="flex-1 space-y-0.5 p-2">

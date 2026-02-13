@@ -9,9 +9,11 @@ import {
   Scissors,
   Combine,
   ArrowUpDown,
-  Image,
   ArrowRight,
+  Github,
+  ImageIcon,
 } from "lucide-react";
+import Image from "next/image";
 const tools = [
   {
     icon: Pencil,
@@ -39,7 +41,7 @@ const tools = [
     desc: "Reorder, delete, or duplicate pages within a PDF.",
   },
   {
-    icon: Image,
+    icon: ImageIcon,
     title: "PDF to Image",
     desc: "Convert PDF pages to PNG, JPG, or WEBP images.",
   },
@@ -54,7 +56,43 @@ const item = { hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } };
 export default function Home() {
   return (
     <div className="min-h-screen bg-background">
-      <header className="flex flex-col items-center justify-center gap-6 px-4 pt-24 pb-16 text-center">
+      <div
+        className="fixed top-0 left-0 w-18 aspect-square bg-black"
+        style={{
+          clipPath: "polygon(0 0, 100% 0, 0% 100%, 0 0)",
+        }}
+      >
+        <Image
+          src="/site-logo.png"
+          alt="PDF Tools logo"
+          height={40}
+          width={40}
+          className="h-10 w-auto brightness-0 invert"
+        />
+      </div>
+      <div
+        className="fixed top-0 right-0 w-18 aspect-square bg-black flex justify-end px-1"
+        style={{
+          clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 0)",
+        }}
+      >
+        <Link target="_blank" href="https://github.com/nirajpdn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="30"
+            viewBox="0 0 48 48"
+            className="text-white hover:text-white/80"
+          >
+            <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
+              <path d="M24 4C12.954 4 4 12.954 4 24s8.954 20 20 20s20-8.954 20-20S35.046 4 24 4M0 24C0 10.745 10.745 0 24 0s24 10.745 24 24s-10.745 24-24 24S0 37.255 0 24" />
+              <path d="M19.183 45.472q-.29-.375 0-6.674q-3.107.108-3.927-.431c-.819-.539-1.64-2.2-2.367-3.371s-2.343-1.356-2.995-1.618c-.652-.261-.816-1.328 1.797-.522c2.613.807 2.74 3.005 3.565 3.518c.825.514 2.796.29 3.689-.122s.827-1.944.987-2.551c.201-.567-.509-.693-.524-.697c-.873 0-5.454-.997-6.713-5.433c-1.258-4.437.363-7.337 1.228-8.583q.864-1.248-.153-5.314Q17.466 13.2 19.473 16c.002.01 1.756-1.043 4.527-1.043s3.755.858 4.514 1.043s1.366-3.266 6.053-2.326c-.979 1.923-1.798 4.326-1.173 5.314c.626.987 3.08 4.127 1.573 8.583q-1.509 4.455-5.929 5.433q-.506.162-.506.522c0 .36.456.399 1.114 2.086q.66 1.686.096 9.635q-1.427.363-2.22.488c-.937.147-1.955.23-2.955.261c-1 .032-1.347.029-2.73-.1a20 20 0 0 1-2.654-.424" />
+            </g>
+          </svg>
+        </Link>
+      </div>
+
+      <header className="pt-10 md:pt-16 pb-10 md:pb-16 flex flex-col items-center justify-center gap-6 px-4">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -97,8 +135,6 @@ export default function Home() {
           </Button>
         </motion.div>
       </header>
-
-      {/* Feature Grid */}
       <section className="mx-auto max-w-5xl px-4 pb-24">
         <motion.div
           className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
