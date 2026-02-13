@@ -46,7 +46,6 @@ const Dashboard = () => {
 
   return (
     <div className="flex h-screen bg-background">
-      {/* Sidebar */}
       <aside className="flex w-56 flex-col border-r bg-card">
         <div className="flex items-center gap-2 border-b px-4 py-3">
           <Button variant="ghost" size="icon" asChild className="h-8 w-8">
@@ -76,9 +75,7 @@ const Dashboard = () => {
           ))}
         </nav>
       </aside>
-
-      {/* Main Content */}
-      <main className="flex-1 overflow-auto p-6">
+      <main className="flex-1 overflow-auto p-6 h-screen flex flex-col">
         <ActiveComponent />
       </main>
     </div>

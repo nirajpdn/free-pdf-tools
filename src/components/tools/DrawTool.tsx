@@ -155,7 +155,7 @@ const DrawTool = () => {
     );
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 flex-1">
       <div className="flex flex-wrap items-center gap-3">
         <h2 className="text-lg font-semibold text-foreground">Draw on PDF</h2>
         <div className="flex items-center gap-1 ml-auto">
@@ -171,6 +171,7 @@ const DrawTool = () => {
         <div className="flex items-center gap-2 w-32">
           <span className="text-xs text-muted-foreground">Size</span>
           <Slider
+            defaultValue={[brushSize]}
             value={[brushSize]}
             onValueChange={([v]) => setBrushSize(v)}
             min={1}
@@ -226,18 +227,20 @@ const DrawTool = () => {
 
       <div
         ref={containerRef}
-        className="relative inline-block rounded-lg border bg-muted/30 overflow-auto max-h-[70vh]"
+        className="relative inline-flex rounded-lg py-6 border bg-muted/90 overflow-auto h-[86vh] justify-center"
       >
-        <canvas ref={canvasRef} className="block max-w-full" />
-        <canvas
-          ref={drawCanvasRef}
-          className="absolute inset-0 cursor-crosshair"
-          style={{ width: "100%", height: "100%" }}
-          onMouseDown={startDraw}
-          onMouseMove={draw}
-          onMouseUp={stopDraw}
-          onMouseLeave={stopDraw}
-        />
+        <div className="relative w-fit">
+          <canvas ref={canvasRef} className="block w-auto h-fit" />
+          <canvas
+            ref={drawCanvasRef}
+            className="absolute inset-0 cursor-crosshair"
+            style={{ width: "100%", height: "100%" }}
+            onMouseDown={startDraw}
+            onMouseMove={draw}
+            onMouseUp={stopDraw}
+            onMouseLeave={stopDraw}
+          />
+        </div>
       </div>
     </div>
   );
