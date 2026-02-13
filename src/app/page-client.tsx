@@ -92,7 +92,7 @@ export default function Home() {
             className="mt-2 rounded-full px-8 text-base"
           >
             <Link href="/dashboard">
-              Open Dashboard <ArrowRight className="size-4" />
+              Get Started <ArrowRight className="size-4" />
             </Link>
           </Button>
         </motion.div>
