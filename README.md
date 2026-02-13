@@ -5,7 +5,7 @@ A free, open-source web application for PDF. Edit, merge, split, arrange, draw o
 ## Demo
 
 ![Landing Screenshot](https://free-pdf-tools.vercel.app/landing-ss.png)
-*Free PDF Tools - All-in-one PDF manipulation platform*
+*Free PDF Tools - All-in-one PDF tools*
 
 ## Tech Stack
 

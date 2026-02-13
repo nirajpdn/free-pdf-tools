@@ -76,7 +76,7 @@ export default function Home() {
           clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 0)",
         }}
       >
-        <Link target="_blank" href="https://github.com/nirajpdn">
+        <Link target="_blank" href="https://github.com/nirajpdn/free-pdf-tools">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="30"
@@ -92,7 +92,7 @@ export default function Home() {
         </Link>
       </div>
 
-      <header className="pt-10 md:pt-16 pb-10 md:pb-16 flex flex-col items-center justify-center gap-6 px-4">
+      <header className="pt-10 md:pt-16 pb-10 md:pb-16 flex flex-col flex-1 items-center justify-center gap-6 px-4">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -162,9 +162,16 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t py-6 text-center text-xs text-muted-foreground">
-        Built with privacy in mind — your files never leave your browser.
+      <footer className="border-t py-6 px-4 text-center text-xs text-muted-foreground">
+        <div className="flex justify-between flex-wrap">
+          <p>
+            Built with privacy in mind — your files never leave your browser.
+          </p>
+          <p>
+            {new Date().getFullYear()} &copy; Free PDF Tool. All rights
+            reserved.
+          </p>
+        </div>
       </footer>
     </div>
   );
