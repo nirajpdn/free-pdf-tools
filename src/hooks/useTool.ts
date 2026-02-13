@@ -1,3 +1,5 @@
+"use client";
+
 import { searchParams } from "@/lib/tool-params";
 import {
   ArrowUpDown,
