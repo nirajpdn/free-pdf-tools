@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback } from "react";
 import FileUploadZone from "@/components/ui/file-upload-zone";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,6 +8,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   loadPdfDocument,
   renderPageToCanvas,
@@ -27,6 +33,8 @@ const PdfToImageTool = () => {
   const [loading, setLoading] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [pdfDoc, setPdfDoc] = useState<PDFDocumentProxy | null>(null);
+  const [isViewOpen, setIsViewOpen] = useState(false);
+  const [viewCanvas, setViewCanvas] = useState<HTMLCanvasElement | null>(null);
 
   const handleFile = useCallback(async (files: File[]) => {
     setLoading(true);
@@ -47,6 +55,14 @@ const PdfToImageTool = () => {
   };
 
   const selectAll = () => setSelected(new Set(thumbnails.map((_, i) => i)));
+
+  const openViewModal = async () => {
+    if (selected.size === 0 || !pdfDoc) return;
+    const pageNum = Array.from(selected)[0] + 1;
+    const canvas = await renderPageToCanvas(pdfDoc, pageNum, 2);
+    setViewCanvas(canvas);
+    setIsViewOpen(true);
+  };
 
   const exportImages = async () => {
     if (!pdfDoc || selected.size === 0) return;
@@ -128,6 +144,13 @@ const PdfToImageTool = () => {
           </Button>
           <Button
             size="sm"
+            disabled={selected.size === 0}
+            onClick={openViewModal}
+          >
+            View
+          </Button>
+          <Button
+            size="sm"
             disabled={selected.size === 0 || exporting}
             onClick={exportImages}
           >
@@ -164,6 +187,26 @@ const PdfToImageTool = () => {
           ))}
         </div>
       )}
+      <Dialog open={isViewOpen} onOpenChange={setIsViewOpen}>
+        <DialogContent className="max-w-4xl">
+          <DialogHeader>
+            <DialogTitle>
+              Page {Array.from(selected)[0] + 1} Preview
+            </DialogTitle>
+          </DialogHeader>
+          {viewCanvas && (
+            <div className="flex justify-center">
+              <div className="max-h-[60vh] overflow-auto rounded-lg border">
+                <img
+                  src={viewCanvas.toDataURL()}
+                  alt="Page preview"
+                  className="w-full"
+                />
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
