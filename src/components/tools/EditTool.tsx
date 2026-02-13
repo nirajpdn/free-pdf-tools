@@ -26,33 +26,36 @@ const EditTool = () => {
   const [selectedBlock, setSelectedBlock] = useState<string | null>(null);
   const [fontSize, setFontSize] = useState(16);
   const [textColor, setTextColor] = useState("#000000");
+  const [pdfDoc, setPdfDoc] = useState<PDFDocumentProxy | null>(null);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
-  const pdfDocRef = useRef<PDFDocumentProxy>(null);
 
-  const renderPage = useCallback(async (pageNum: number) => {
-    if (!pdfDocRef.current || !canvasRef.current) return;
-    const pdfCanvas = await renderPageToCanvas(pdfDocRef.current, pageNum, 1.5);
-    const canvas = canvasRef.current;
-    canvas.width = pdfCanvas.width;
-    canvas.height = pdfCanvas.height;
-    canvas.getContext("2d")!.drawImage(pdfCanvas, 0, 0);
-  }, []);
+  const renderPage = useCallback(
+    async (pageNum: number) => {
+      if (!pdfDoc || !canvasRef.current) return;
+      const pdfCanvas = await renderPageToCanvas(pdfDoc, pageNum, 1.5);
+      const canvas = canvasRef.current;
+      canvas.width = pdfCanvas.width;
+      canvas.height = pdfCanvas.height;
+      canvas.getContext("2d")!.drawImage(pdfCanvas, 0, 0);
+    },
+    [pdfDoc],
+  );
 
   const handleFile = useCallback(async (files: File[]) => {
     const f = files[0];
     setFile(f);
     const pdf = await loadPdfDocument(f);
-    pdfDocRef.current = pdf;
+    setPdfDoc(pdf);
     setNumPages(pdf.numPages);
     setCurrentPage(1);
     setTextBlocks(new Map());
   }, []);
 
   useEffect(() => {
-    if (pdfDocRef.current) renderPage(currentPage);
-  }, [currentPage, renderPage]);
+    if (pdfDoc) renderPage(currentPage);
+  }, [currentPage, pdfDoc, renderPage]);
 
   const addTextBlock = (e: React.MouseEvent) => {
     if ((e.target as HTMLElement).closest(".text-block")) return;
@@ -200,7 +203,7 @@ const EditTool = () => {
           size="sm"
           onClick={() => {
             setFile(null);
-            pdfDocRef.current = null;
+            setPdfDoc(null);
           }}
         >
           Change File

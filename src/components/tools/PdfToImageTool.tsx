@@ -26,14 +26,14 @@ const PdfToImageTool = () => {
   const [format, setFormat] = useState<ImageFormat>("png");
   const [loading, setLoading] = useState(false);
   const [exporting, setExporting] = useState(false);
-  const pdfDocRef = useRef<PDFDocumentProxy>(null);
+  const [pdfDoc, setPdfDoc] = useState<PDFDocumentProxy | null>(null);
 
   const handleFile = useCallback(async (files: File[]) => {
     setLoading(true);
     const f = files[0];
     setFile(f);
     const pdf = await loadPdfDocument(f);
-    pdfDocRef.current = pdf;
+    setPdfDoc(pdf);
     const thumbs = await getAllPageThumbnails(pdf);
     setThumbnails(thumbs);
     setSelected(new Set());
@@ -49,14 +49,14 @@ const PdfToImageTool = () => {
   const selectAll = () => setSelected(new Set(thumbnails.map((_, i) => i)));
 
   const exportImages = async () => {
-    if (!pdfDocRef.current || selected.size === 0) return;
+    if (!pdfDoc || selected.size === 0) return;
     setExporting(true);
     const mimeType = `image/${format}`;
     const ext = format === "jpeg" ? "jpg" : format;
 
     if (selected.size === 1) {
       const pageNum = Array.from(selected)[0] + 1;
-      const canvas = await renderPageToCanvas(pdfDocRef.current, pageNum, 2);
+      const canvas = await renderPageToCanvas(pdfDoc, pageNum, 2);
       canvas.toBlob(
         (blob) => {
           if (!blob) return;
@@ -75,7 +75,7 @@ const PdfToImageTool = () => {
     } else {
       const zip = new JSZip();
       for (const idx of Array.from(selected).sort((a, b) => a - b)) {
-        const canvas = await renderPageToCanvas(pdfDocRef.current, idx + 1, 2);
+        const canvas = await renderPageToCanvas(pdfDoc, idx + 1, 2);
         const dataUrl = canvas.toDataURL(mimeType, 0.95);
         const base64 = dataUrl.split(",")[1];
         zip.file(`page-${idx + 1}.${ext}`, base64, { base64: true });
@@ -139,7 +139,7 @@ const PdfToImageTool = () => {
             onClick={() => {
               setFile(null);
               setThumbnails([]);
-              pdfDocRef.current = null;
+              setPdfDoc(null);
             }}
           >
             Change File
