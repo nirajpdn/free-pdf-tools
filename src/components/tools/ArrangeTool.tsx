@@ -67,7 +67,7 @@ const ArrangeTool = () => {
 
   if (!file)
     return (
-      <div className="mx-auto max-w-lg pt-12">
+      <div>
         <h2 className="mb-4 text-xl font-semibold text-foreground">
           Arrange Pages
         </h2>
@@ -122,20 +122,20 @@ const ArrangeTool = () => {
                 alt={`Page ${origIdx + 1}`}
                 className="w-full"
               />
-              <div className="absolute bottom-0 inset-x-0 flex items-center justify-between bg-background/80 px-1.5 py-0.5">
+              <div className="absolute bottom-0 inset-x-0 flex items-center justify-between bg-background/80 px-1.5 py-1">
                 <span className="text-[10px] font-medium">{origIdx + 1}</span>
-                <div className="flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                   <button
                     onClick={() => duplicatePage(i)}
-                    className="text-muted-foreground hover:text-foreground"
+                    className="text-muted-foreground hover:text-foreground cursor-pointer"
                   >
-                    <Copy className="h-3 w-3" />
+                    <Copy className="size-3" />
                   </button>
                   <button
                     onClick={() => deletePage(i)}
-                    className="text-muted-foreground hover:text-destructive"
+                    className="text-muted-foreground hover:text-destructive cursor-pointer"
                   >
-                    <Trash2 className="h-3 w-3" />
+                    <Trash2 className="size-3" />
                   </button>
                 </div>
               </div>

@@ -141,7 +141,7 @@ const EditTool = () => {
 
   if (!file)
     return (
-      <div className="mx-auto max-w-lg pt-12">
+      <div>
         <h2 className="mb-4 text-xl font-semibold text-foreground">Edit PDF</h2>
         <p className="mb-4 text-sm text-muted-foreground">
           Click anywhere on the PDF to add text blocks.

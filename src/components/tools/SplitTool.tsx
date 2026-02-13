@@ -54,7 +54,7 @@ const SplitTool = () => {
 
   if (!file)
     return (
-      <div className="mx-auto max-w-lg pt-12">
+      <div>
         <h2 className="mb-4 text-xl font-semibold text-foreground">
           Split PDF
         </h2>
