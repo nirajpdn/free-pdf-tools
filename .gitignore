@@ -40,4 +40,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-/pdf.worker.min.mjspdf.worker.min.mjs
+pdf.worker.min.mjs
