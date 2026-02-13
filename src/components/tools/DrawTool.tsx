@@ -6,6 +6,7 @@ import { PDFDocument } from "pdf-lib";
 import FileUploadZone from "../ui/file-upload-zone";
 import { toast } from "sonner";
 import { PDFDocumentProxy } from "pdfjs-dist";
+import { Download } from "lucide-react";
 
 const COLORS = [
   "#000000",
@@ -185,6 +186,7 @@ const DrawTool = () => {
           Clear
         </Button>
         <Button size="sm" onClick={downloadPdf}>
+          <Download className="size-4" />
           Download
         </Button>
       </div>

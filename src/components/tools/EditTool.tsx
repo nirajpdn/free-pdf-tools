@@ -6,6 +6,7 @@ import { loadPdfDocument, renderPageToCanvas } from "@/lib/pdf-utils";
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 import { PDFDocumentProxy } from "pdfjs-dist";
 import { toast } from "sonner";
+import { Download } from "lucide-react";
 
 interface TextBlock {
   id: string;
@@ -173,6 +174,7 @@ const EditTool = () => {
             className="h-8 w-8 rounded border cursor-pointer"
           />
           <Button size="sm" onClick={downloadPdf}>
+            <Download className="size-4" />
             Download
           </Button>
         </div>

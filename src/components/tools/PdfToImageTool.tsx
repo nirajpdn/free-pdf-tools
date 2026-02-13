@@ -22,6 +22,7 @@ import {
 import JSZip from "jszip";
 import { PDFDocumentProxy } from "pdfjs-dist";
 import { toast } from "sonner";
+import { Download, Loader2 } from "lucide-react";
 
 type ImageFormat = "png" | "jpeg" | "webp";
 
@@ -154,6 +155,11 @@ const PdfToImageTool = () => {
             disabled={selected.size === 0 || exporting}
             onClick={exportImages}
           >
+            {exporting ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              <Download className="size-4" />
+            )}
             {exporting ? "Exporting..." : "Export"}
           </Button>
           <Button
