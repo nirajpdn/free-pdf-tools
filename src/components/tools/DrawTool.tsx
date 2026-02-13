@@ -18,6 +18,7 @@ const COLORS = [
 
 const DrawTool = () => {
   const [file, setFile] = useState<File | null>(null);
+  const [pdfDoc, setPdfDoc] = useState<PDFDocumentProxy | null>(null);
   const [numPages, setNumPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [color, setColor] = useState("#000000");
@@ -27,42 +28,43 @@ const DrawTool = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const drawCanvasRef = useRef<HTMLCanvasElement>(null);
-  const pdfDocRef = useRef<PDFDocumentProxy>(null);
   const drawingsRef = useRef<Map<number, string>>(new Map());
 
-  const renderPage = useCallback(async (pageNum: number) => {
-    if (!pdfDocRef.current || !canvasRef.current || !drawCanvasRef.current)
-      return;
-    const pdfCanvas = await renderPageToCanvas(pdfDocRef.current, pageNum, 1.5);
-    const canvas = canvasRef.current;
-    canvas.width = pdfCanvas.width;
-    canvas.height = pdfCanvas.height;
-    canvas.getContext("2d")!.drawImage(pdfCanvas, 0, 0);
+  const renderPage = useCallback(
+    async (pageNum: number) => {
+      if (!pdfDoc || !canvasRef.current || !drawCanvasRef.current) return;
+      const pdfCanvas = await renderPageToCanvas(pdfDoc, pageNum, 1.5);
+      const canvas = canvasRef.current;
+      canvas.width = pdfCanvas.width;
+      canvas.height = pdfCanvas.height;
+      canvas.getContext("2d")!.drawImage(pdfCanvas, 0, 0);
 
-    const drawCanvas = drawCanvasRef.current;
-    drawCanvas.width = pdfCanvas.width;
-    drawCanvas.height = pdfCanvas.height;
-    const savedDrawing = drawingsRef.current.get(pageNum);
-    if (savedDrawing) {
-      const img = new window.Image();
-      img.onload = () => drawCanvas.getContext("2d")!.drawImage(img, 0, 0);
-      img.src = savedDrawing;
-    }
-  }, []);
+      const drawCanvas = drawCanvasRef.current;
+      drawCanvas.width = pdfCanvas.width;
+      drawCanvas.height = pdfCanvas.height;
+      const savedDrawing = drawingsRef.current.get(pageNum);
+      if (savedDrawing) {
+        const img = new window.Image();
+        img.onload = () => drawCanvas.getContext("2d")!.drawImage(img, 0, 0);
+        img.src = savedDrawing;
+      }
+    },
+    [pdfDoc],
+  );
 
   const handleFile = useCallback(async (files: File[]) => {
     const f = files[0];
     setFile(f);
     const pdf = await loadPdfDocument(f);
-    pdfDocRef.current = pdf;
+    setPdfDoc(pdf);
     setNumPages(pdf.numPages);
     setCurrentPage(1);
     drawingsRef.current.clear();
   }, []);
 
   useEffect(() => {
-    if (pdfDocRef.current) renderPage(currentPage);
-  }, [currentPage, renderPage]);
+    if (pdfDoc) renderPage(currentPage);
+  }, [currentPage, pdfDoc, renderPage]);
 
   const saveCurrentDrawing = () => {
     if (drawCanvasRef.current) {
@@ -218,7 +220,7 @@ const DrawTool = () => {
           size="sm"
           onClick={() => {
             setFile(null);
-            pdfDocRef.current = null;
+            setPdfDoc(null);
           }}
         >
           Change File
@@ -227,10 +229,10 @@ const DrawTool = () => {
 
       <div
         ref={containerRef}
-        className="relative inline-flex rounded-lg py-6 border bg-muted/90 overflow-auto h-[86vh] justify-center"
+        className="relative inline-flex rounded-lg border bg-muted/90 overflow-auto h-[86vh] justify-center"
       >
         <div className="relative w-fit">
-          <canvas ref={canvasRef} className="block w-auto h-fit" />
+          <canvas ref={canvasRef} className="block w-auto h-fit min-w-[60vw]" />
           <canvas
             ref={drawCanvasRef}
             className="absolute inset-0 cursor-crosshair"
