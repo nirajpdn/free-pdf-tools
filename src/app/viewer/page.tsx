@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { loadPdfDocumentFromUrl } from "@/lib/pdf-utils";
 import { useRef } from "react";
 
-const ViewerPage = () => {
+export const dynamic = "force-dynamic";
+const ViewerContent = () => {
   const searchParams = useSearchParams();
   const rawUrl = searchParams.get("url");
   const [isLoading, setIsLoading] = useState(false);
@@ -157,6 +158,20 @@ const ViewerPage = () => {
         <div ref={canvasContainerRef} className="mt-4 space-y-4" />
       </div>
     </main>
+  );
+};
+
+const ViewerPage = () => {
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen grid place-items-center p-6">
+          <p className="text-sm text-muted-foreground">Loading viewer...</p>
+        </main>
+      }
+    >
+      <ViewerContent />
+    </Suspense>
   );
 };
 
