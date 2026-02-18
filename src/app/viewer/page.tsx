@@ -102,7 +102,7 @@ const ViewerContent = () => {
           <p className="mt-2 text-sm text-muted-foreground">
             Missing PDF URL. Open this page like:
             <br />
-            <code className="text-xs">
+            <code className="text-xs break-all">
               /viewer?url=https://pub-69efd47650a0420f8446677d9eef8f8f.r2.dev/portfolio/Niraj_Pradhan_Resume.pdf
             </code>
           </p>
