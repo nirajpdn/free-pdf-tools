@@ -81,6 +81,7 @@ pnpm lint
 - **Split PDFs** - Extract specific pages or split documents
 - **Arrange Pages** - Reorder and reorganize PDF pages
 - **Convert to Images** - Export PDF pages as PNG/JPG images
+- **Full-Page PDF Viewer** - Open remote PDFs at `/viewer?url=https://...` and render all pages on high-quality canvas
 
 ### 🚀 Upcoming Features
 
@@ -90,6 +91,30 @@ pnpm lint
 - **Form Filling** - Interactive form field support
 - **Digital Signatures** - Sign and verify document signatures
 - **Batch Processing** - Process multiple files at once
+
+## PDF Viewer
+
+The app now includes a dedicated full-page PDF viewer route:
+
+```txt
+/viewer?url=https://pub-69efd47650a0420f8446677d9eef8f8f.r2.dev/portfolio/Niraj_Pradhan_Resume.pdf
+```
+
+### How it works
+
+- Renders pages using `pdf.js` on `<canvas>` (no iframe)
+- Uses a same-origin proxy endpoint (`/api/pdf`) to avoid browser CORS issues
+- Applies high-resolution rendering for sharper text quality
+
+### Development-only localhost support
+
+For local development, localhost PDF URLs are allowed through the proxy, for example:
+
+```txt
+/viewer?url=http://localhost:3000/Niraj_Pradhan_Resume.pdf
+```
+
+In production, localhost/private hostnames remain blocked.
 
 ## Project Structure
 

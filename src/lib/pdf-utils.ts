@@ -17,6 +17,12 @@ export async function loadPdfDocument(file: File) {
   return pdf;
 }
 
+export async function loadPdfDocumentFromUrl(url: string) {
+  const pdfjs = await getPdfJs();
+  const pdf = await pdfjs.getDocument({ url }).promise;
+  return pdf;
+}
+
 export async function renderPageToCanvas(
   pdf: import("pdfjs-dist").PDFDocumentProxy,
   pageNum: number,
