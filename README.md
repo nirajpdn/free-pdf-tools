@@ -2,8 +2,8 @@
 
 A free, open-source web application for PDF. Edit, merge, split, arrange, draw on, and convert PDFs to images—all without subscriptions or watermarks.
 
-## Demo
-[Preview Demo](https://free-pdf-tools.vercel.app)
+## Preview
+[Live Preview](https://free-pdf-tools.vercel.app)
 
 ![Landing Screenshot](https://free-pdf-tools.vercel.app/landing-ss.png)
 *Free PDF Tools - All-in-one PDF tools*
