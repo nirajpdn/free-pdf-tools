@@ -11,27 +11,27 @@ A free, open-source web application for PDF. Edit, merge, split, arrange, draw o
 ## Tech Stack
 
 ### Frontend
-- **React** 19.2 - UI library
-- **Next.js** 16.1 - React framework with SSR and static generation
+- **React** - UI library
+- **Next.js** - React framework with SSR and static generation
 - **TypeScript** - Type-safe development
 
 ### PDF Processing
-- **pdfjs-dist** 5.4 - PDF rendering and viewing
-- **pdf-lib** 1.17 - PDF manipulation and creation
+- **pdfjs-dist** - PDF rendering and viewing
+- **pdf-lib** - PDF manipulation and creation
 
 ### UI & Styling
 - **Tailwind CSS** 4 - Utility-first CSS framework
-- **Radix UI** 1.4 - Headless UI components
+- **Radix UI** - Headless UI components
 - **Shadcn** - Component library built on Radix UI
-- **Lucide React** 0.563 - Icon library
+- **Lucide React** - Icon library
 
 ### Utilities & Animations
-- **Framer Motion** 12.34 - Animation library
-- **jszip** 3.10 - ZIP file handling
-- **nuqs** 2.8 - URL search params state management
-- **Sonner** 2.0 - Toast notifications
-- **Tailwind Merge** 3.4 - Utility class merging
-- **clsx** 2.1 - Conditional className utility
+- **Framer Motion** - Animation library
+- **jszip** - ZIP file handling
+- **nuqs** - URL search params state management
+- **Sonner** - Toast notifications
+- **Tailwind Merge** - Utility class merging
+- **clsx** - Conditional className utility
 
 ## Getting Started
 
